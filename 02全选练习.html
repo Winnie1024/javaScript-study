@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			#box{
+			    border: solid 1px;
+			    height: 300px;
+			    width: 500px;
+			    margin:100px auto;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+			var itmes = document.getElementsByName("itmes");
+			//全选
+			var checkedAllBtn = document.getElementById("checkedAllBtn");
+			checkedAllBtn.onclick = function(){
+			for(var i = 0 ; i<itmes.length ; i++){
+				itmes[i].checked = true;
+			}
+			}
+			//全不选
+			var checkedNoBtn = document.getElementById("checkedNoBtn");
+			checkedNoBtn.onclick = function(){
+			for(var i = 0 ; i<itmes.length ; i++){
+				itmes[i].checked = false;
+			}
+			}
+			//反选
+			var checkedRevBtn = document.getElementById("checkedRevBtn");
+			checkedRevBtn.onclick = function(){
+			for(var i = 0 ; i<itmes.length ; i++){
+				itmes[i].checked = !itmes[i].checked;
+			}
+			}
+			//提交
+			var sendBtn = document.getElementById("sendBtn");
+			sendBtn.onclick = function(){
+			for(var i = 0 ; i<itmes.length ; i++){
+				if(itmes[i].checked){
+				alert(itmes[i].value);
+				}
+			}
+			}
+			//全选与全不选
+			var checkedAllBox = document.getElementById("checkedAllBox");
+			checkedAllBox.onclick = function(){
+			for(var i = 0 ; i<itmes.length ; i++){
+				itmes[i].checked = checkedAllBox.checked;
+			}
+			}
+// 			checkedAllBox.checked = function(){
+// // 				for(var i = 0 ; i<itmes.length ; i++){
+// // 					var flag = true;
+// // 					if(itmes[i].checked = false)
+// // 					flag = false;
+// // 				}
+// // 				return flag;
+// 			}
+// 		自己尝试写的,下面才是正确的
+			for(i = 0 ; i<itmes.length ; i++){
+				itmes[i].onclick =function(){
+					for(j = 0 ; j<itmes.length ; j++){
+						if(!itmes[j].checked){
+							checkedAllBox.checked = false;
+							break;
+						}
+						checkedAllBox.checked = true;//一定在循环里要先设置选中，否则再次点击就出现问题因为只设置了false
+					}
+				} ;
+			}
+		}
+		</script>
+	</head>
+	<body>
+		<div id="box">
+			<form method="post" action="" >
+				你的运动爱好是？<input type="checkbox" id="checkedAllBox" />全选/全不选
+				<br /><br /><br />
+				<input type="checkbox" name="itmes" value="足球" />足球
+				<input type="checkbox" name="itmes" value="篮球" />篮球
+				<input type="checkbox" name="itmes" value="羽毛球" />羽毛球
+				<input type="checkbox" name="itmes" value="乒乓球" />乒乓球
+				<br /><br /><br />
+				<input type="button" id="checkedAllBtn" value="全 选" />
+				<input type="button" id="checkedNoBtn" value="全不选" />
+				<input type="button" id="checkedRevBtn" value="反 选" />
+				<input type="button" id="sendBtn" value="提 交" />
+			</form>
+		</div>
+	</body>
+</html>
