@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			window.onload = function(){
+				var btn1 =document.getElementById("btn1");
+				var btn2 =document.getElementById("btn2");
+				var img =document.getElementsByTagName("img")[0];
+				var info = document.getElementById("info");
+				var imgArr = ["img/img1.jpg","img/img2.jpg","img/img3.jpg","img/img4.jpg","img/img5.jpg"] ;
+				var index = 0;
+				btn1.onclick = function(){
+					index--;
+					if(index < 0){
+						index = imgArr.length-1;
+					}
+					img.src = imgArr[index];
+					info.innerHTML = "一共"+imgArr.length+"张图片，当前第"+(index+1)+"张";
+				}
+				btn2.onclick = function(){
+					index++;
+					if(index == imgArr.length){
+						index = 0;
+					}
+					img.src = imgArr[index];
+					info.innerHTML = "一共"+imgArr.length+"张图片，当前第"+(index+1)+"张";
+				}
+				
+			}
+		</script>
+		<style>
+			*{
+				margin: 0; padding: 0;
+			}
+			#box{
+				width: 500px;
+				margin: 50px auto;
+				padding: 20px;
+				background-color: antiquewhite;
+				text-align: center;
+			}
+			img{
+				width: 500px;
+			}
+		</style>
+	<body>
+		<div id="box">
+			<p id = "info">一共5张图片，当前第1张</p>
+			<div id="picture">
+				<img src="img/img1.jpg" alt="图1" />
+			</div>
+			<button id="btn1">上一页</button>
+			<button id="btn2">下一页</button>
+		</div>
+	</body>
+</html>
