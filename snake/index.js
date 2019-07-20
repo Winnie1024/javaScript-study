@@ -179,14 +179,15 @@ function Game() {
     this.timer = null;
     this.score = 0;
 	this.enter = null;
+	this.flag = null
 }
 Game.prototype.init = function () {
+var that = this
     snake.init()
     // snake.getNextPos()
     creatFood();
     document.onkeydown = function (e) {
-		var ev = document.all ? window.event : e;
-		
+        var ev = document.all ? window.event : e;
         if (ev.which == 37 && snake.direction != snake.directionNum.right) {
             snake.direction = snake.directionNum.left;
         }else if (ev.which == 38 && snake.direction != snake.directionNum.down) {
@@ -196,30 +197,44 @@ Game.prototype.init = function () {
         }else if (ev.which == 40 && snake.direction != snake.directionNum.up) {
             snake.direction = snake.directionNum.down;
         }
-		
+        if (ev.which == 32 ) {
+            that.flag = !that.flag;
+            if(that.flag){
+                that.pause()
+                pauseBtn.parentNode.style.display = 'block'
+            }else{
+                that.start()
+                pauseBtn.parentNode.style.display = 'none'
+            }
+        }
     }
-    this.start();
+    this.start()
 }
 Game.prototype.start = function(){
+    var that = this
     this.timer = setInterval(function () {
         snake.getNextPos();
     },200);
+
 }
 Game.prototype.pause = function(){
 	clearInterval(this.timer)
 	}
 Game.prototype.over = function(){
 	clearInterval(this.timer)
-	alert('您的得分为：'+this.score)
-	
+
+    var num = document.querySelector('.num')
+    num.innerHTML = this.score + '分'
+    num.parentNode.parentNode.style.display = 'block'
+
 	var snakeWrap = document.getElementById('snakeWrap')
 	snakeWrap.innerHTML = ''
 	
 	snake = new Snake();
 	game = new Game();
 	
-	var startBtnWrap = document.querySelector('.startBtn')
-	startBtnWrap.style.display = 'block'
+
+
 }
 game = new Game();
 var startBtn = document.querySelector('.startBtn button')
@@ -230,14 +245,18 @@ startBtn.onclick = function(){
 var snakeWrap = document.getElementById('snakeWrap')
 var pauseBtn = document.querySelector('.pauseBtn button')
 snakeWrap.onclick = function(){
+    game.flag = !game.flag;
     game.pause();
 	pauseBtn.parentNode.style.display = 'block'
 }
 pauseBtn.onclick = function(){
-	game.start();
+    game.flag = !game.flag;
+    game.start();
 	pauseBtn.parentNode.style.display = 'none'
 }
-document.onkeydown = function (e) {
-		var ev = document.all ? window.event : e;
-		console.log(ev)
-}		
+var close = document.querySelector('.bg button')
+close.onclick = function () {
+    close.parentNode.parentNode.style.display = 'none'
+    var startBtnWrap = document.querySelector('.startBtn')
+    startBtnWrap.style.display = 'block'
+}
